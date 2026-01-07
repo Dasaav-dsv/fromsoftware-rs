@@ -903,7 +903,7 @@ pub struct PlayerIns {
     npc_sp_effect_equip_ctrl: usize,
     unk620: [u8; 0x18],
     pub chr_asm: OwnedPtr<ChrAsm>,
-    chr_asm_model_res: usize,
+    pub chr_asm_model_res: Option<NonNull<u8>>,
     pub chr_asm_model_ins: Option<OwnedPtr<CSChrAsmModelIns>>,
     unk650: [u8; 0x28],
     /// Set on player spawn and maybe on arena respawn?
