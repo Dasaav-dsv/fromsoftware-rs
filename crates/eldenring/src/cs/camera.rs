@@ -88,7 +88,7 @@ pub type CSPersCam = CSCam;
 #[derive(Subclass)]
 pub struct ChrCam {
     pub pers_cam: CSPersCam,
-    ex_follow_cam: OwnedPtr<CSPersCam>,
+    pub ex_follow_cam: OwnedPtr<ChrExFollowCam>,
     aim_cam: OwnedPtr<CSPersCam>,
     dist_view_cam: OwnedPtr<CSPersCam>,
     /// Setting this to True will reset the camera to the default position.
@@ -127,7 +127,9 @@ pub struct ChrExFollowCam {
     pub chr_cam: OwnedPtr<ChrCam>,
     unk68: [u8; 0x1d8],
     pub camera_auto_rotation: bool,
-    unk241: [u8; 0xa3],
+    unk241: [u8; 0x1b],
+    pub angle_limit: f32,
+    unk260: [u8; 0x84],
     pub locked_on_cam_offset: f32,
     unk2e8: [u8; 0x48],
     pub reset_camera_y: bool,
