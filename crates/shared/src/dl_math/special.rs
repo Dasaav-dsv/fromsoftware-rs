@@ -41,9 +41,12 @@ impl F32ModelMatrix {
     /// Extract the rotation matrix.
     #[inline]
     pub fn rotation<T: From<Mat3A>>(&self) -> T {
-        let m =
-            Mat4::from_cols(self.0.into(), self.1.into(), self.2.into(), self.3.into()).transpose();
-        Mat3A::from_mat4(m).into()
+        Mat3A::from_cols(
+            Vec3A::new(self.0.0, self.1.0, self.2.0),
+            Vec3A::new(self.0.1, self.1.1, self.2.1),
+            Vec3A::new(self.0.2, self.1.2, self.2.2),
+        )
+        .into()
     }
 
     /// Extract the translation vector.
