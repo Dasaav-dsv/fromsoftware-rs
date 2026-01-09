@@ -25,6 +25,13 @@ pub type F32ViewMatrix = F32ModelMatrix;
 pub struct F32PackedModelMatrix(pub F32Vector4, pub F32Vector4, pub F32Vector4);
 
 impl F32ModelMatrix {
+    pub const IDENTITY: Self = Self(
+        F32Vector4(1.0, 0.0, 0.0, 0.0),
+        F32Vector4(0.0, 1.0, 0.0, 0.0),
+        F32Vector4(0.0, 0.0, 1.0, 0.0),
+        F32Vector4(0.0, 0.0, 0.0, 1.0),
+    );
+
     /// Construct from an array of row vectors.
     #[inline]
     pub fn new(r0: F32Vector4, r1: F32Vector4, r2: F32Vector4, r3: F32Vector4) -> Self {
