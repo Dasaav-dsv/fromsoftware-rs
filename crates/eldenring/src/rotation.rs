@@ -34,6 +34,6 @@ impl Quaternion {
 impl From<Quaternion> for glam::Quat {
     #[inline]
     fn from(Quaternion(x, y, z, w): Quaternion) -> Self {
-        Self::from_xyzw(x, y, z, w)
+        Self::from_xyzw(x, w, z, y)
     }
 }
