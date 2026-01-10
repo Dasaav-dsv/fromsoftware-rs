@@ -6,9 +6,12 @@ use crate::rva;
 
 #[repr(C)]
 #[shared::singleton("CSActionButtonMan")]
-pub struct CSActionButtonManImp {
+pub struct CSActionButtonMan {
     vftable: usize,
-    unk8: [u8; 0x88],
+    unk08: [u8; 0x7b],
+    pub is_use_held: bool,
+    pub is_use_pressed: bool,
+    unk85: [u8; 0xb],
     pub mutex: DLPlainLightMutex,
 }
 
@@ -25,7 +28,7 @@ struct UnkActionButtonStruct {
 }
 
 type FnExecuteActionButton = extern "C" fn(
-    *const CSActionButtonManImp,
+    *const CSActionButtonMan,
     i32,
     i8,
     i8,
@@ -36,7 +39,7 @@ type FnExecuteActionButton = extern "C" fn(
     *const UnkActionButtonStruct,
 ) -> bool;
 
-impl CSActionButtonManImp {
+impl CSActionButtonMan {
     pub fn present_action_button(&mut self, action_button_param_id: i32) -> bool {
         let target = unsafe {
             std::mem::transmute::<u64, FnExecuteActionButton>(
