@@ -131,7 +131,9 @@ pub struct ChrExFollowCam {
     pub angle_limit: f32,
     unk260: [u8; 0x84],
     pub locked_on_cam_offset: f32,
-    unk2e8: [u8; 0x48],
+    unk2e8: [u8; 0x2d],
+    pub reset_camera: bool,
+    unk30c: [u8; 0x1a],
     pub reset_camera_y: bool,
     pub reset_camera_x: bool,
 }
