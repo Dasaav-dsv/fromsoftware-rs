@@ -1633,7 +1633,7 @@ pub struct ChrCtrl {
     /// Fetched from NpcParam
     pub undulation_correction_gain: f32,
     unk33c: [u8; 0x14],
-    unk350: F32Vector4,
+    pub input_move_dir: F32Vector4,
     unk360: F32Vector4,
     unk370: [u8; 0x10],
     unk380: F32Vector4,
