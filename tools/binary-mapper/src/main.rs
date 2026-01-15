@@ -247,7 +247,7 @@ fn generate_rust_struct(profile: &MapperProfile) -> String {
 fn generate_rust_instance(results: &[MapperEntryResult]) -> String {
     let mut output = String::new();
     for result in results {
-        writeln!(output, "    pub const {}: u32 = {:#x},", result.name, result.rva).unwrap();
+        writeln!(output, "pub const {}: u32 = {:#x};", result.name, result.rva).unwrap();
     }
     output
 }
