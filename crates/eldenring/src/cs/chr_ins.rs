@@ -582,7 +582,7 @@ pub struct ChrInsModuleContainer {
     /// Describes the characters physics-related properties.
     pub physics: OwnedPtr<CSChrPhysicsModule>,
     pub fall: OwnedPtr<CSChrFallModule>,
-    ladder: usize,
+    pub ladder: OwnedPtr<CSChrLadderModule>,
     pub action_request: OwnedPtr<CSChrActionRequestModule>,
     pub throw: OwnedPtr<CSChrThrowModule>,
     hitstop: usize,
@@ -1335,15 +1335,13 @@ pub struct CSChrEventModule {
     pub idle_anim_id: i32,
     unk20: i32,
     unk24: u32,
-    pub ez_state_request_ladder: i32,
-    unk2c: [u8; 0xB],
+    pub ez_state_requests: [i32; 4],
     pub msg_map_list_call: i32,
     unk3c: u32,
     pub flags: u8, // bit in pos 1 is iframes
     unk41: [u8; 0xA],
-    pub ez_state_request_ladder_output: i32,
-    pub ladder_state: i32,
-    unk54: [u8; 0x23],
+    pub ez_state_requests_state: [i32; 4],
+    unk5c: [u8; 0x1b],
 }
 
 #[repr(C)]
@@ -2030,6 +2028,32 @@ pub enum ChrType {
     BloodyFingerNpc = 20,
     RecusantNpc = 21,
     Unk22 = 22,
+}
+
+#[repr(C)]
+/// Source of name: RTTI
+pub struct CSChrFallModule {
+    vftable: usize,
+    pub owner: NonNull<ChrIns>,
+    unk10: i64,
+    pub fall_timer: f32,
+    hamari_fall_death_checked: bool,
+    pub force_max_fall_height: bool,
+    pub disable_fall_motion: bool,
+}
+
+#[repr(C)]
+/// Source of name: RTTI
+pub struct CSChrLadderModule {
+    vftable: usize,
+    pub owner: NonNull<ChrIns>,
+    pub ladder_handle: FieldInsHandle,
+    pub ladder_state: u8,
+    pub ladder_top: HavokPosition,
+    pub ladder_bottom: HavokPosition,
+    unk40: u8,
+    unk44: u32,
+    pub flags: u8,
 }
 
 #[repr(C)]
