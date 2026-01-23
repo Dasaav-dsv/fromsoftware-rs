@@ -1,6 +1,7 @@
 use super::{AtkParamLookupResult, BlockId};
 
 use bitfield::bitfield;
+use vtable_rs::VPtr;
 
 use std::fmt::Display;
 
@@ -74,6 +75,11 @@ pub struct FieldInsHandle {
     pub block_id: BlockId,
 }
 
+pub struct FieldInsBase {
+    pub vftable: VPtr<dyn FieldInsBaseVmt, Self>,
+    pub handle: FieldInsHandle,
+}
+
 impl FieldInsHandle {
     pub fn is_empty(&self) -> bool {
         self.selector.0 == u32::MAX
@@ -105,7 +111,7 @@ pub trait FieldInsBaseVmt {
     fn destructor(&mut self, param_2: u32);
 
     /// Part of FieldInsBase, ChrIns = 1, CSBulletIns = 3, CSWorldGeomIns = 6, MapIns = 7, CSWorldGeomHitIns = 8,
-    fn get_field_ins_type(&self) -> u32;
+    fn get_field_ins_type(&self) -> FieldInsType;
 
     fn use_npc_atk_param(&self) -> bool;
 
