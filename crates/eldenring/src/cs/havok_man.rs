@@ -1,9 +1,10 @@
+use std::{ffi::c_void, ptr::NonNull};
+
 use pelite::pe64::Pe;
 
 use super::PlayerIns;
 use crate::{
-    position::{HavokPosition, PositionDelta},
-    rva,
+    cs::FieldInsBase, position::{HavokPosition, PositionDelta}, rva
 };
 use shared::{OwnedPtr, program::Program};
 
@@ -14,12 +15,34 @@ pub struct CSHavokMan {
     vftable: usize,
     unk8: [u8; 0x90],
     pub phys_world: OwnedPtr<CSPhysWorld>,
+    unka0: [u8; 0x20],
+    pub collision_filter: *mut c_void,
 }
 
 // Source of name: RTTI
 #[repr(C)]
 pub struct CSPhysWorld {
-    // TODO
+    vftable: usize,
+    pub hknp_world: OwnedPtr<hknpWorld>,
+}
+
+#[repr(C)]
+pub struct CSPhysIns {
+    vftable: usize,
+    unk08: u16,
+    pub owner: NonNull<FieldInsBase>,
+}
+
+// Source of name: RTTI
+#[repr(C)]
+pub struct hknpWorld {
+    vftable: usize,
+    unk08: [u8; 0x10],
+    hknp_world: *mut hknpWorld,
+    unk20: usize,
+    pub hknp_body_array: *mut c_void,
+    unk30: [u8; 0xad0],
+    pub shape_tag_filter: *mut c_void,
 }
 
 type FnCastRay = extern "C" fn(
