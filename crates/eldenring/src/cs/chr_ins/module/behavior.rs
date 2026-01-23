@@ -1,6 +1,6 @@
 use std::ptr::NonNull;
 
-use shared::F32Vector4;
+use shared::{F32Vector4, OwnedPtr};
 
 use crate::{cs::ChrIns, fd4::FD4Time};
 
@@ -14,7 +14,10 @@ pub struct CSChrBehaviorModule {
     unk28: usize,
     pub root_motion: F32Vector4,
     unk40: [u8; 0x20],
-    unk60: [u8; 0xa48],
+    pub hkb_context: OwnedPtr<hkbCharacterContext>,
+    unk60: [u8; 0x230],
+    pub sprint_state: u16,
+    unk29a: [u8; 0x80e],
     unkaa8: [u8; 0x58],
     unkb00: [u8; 0xa48],
     unk1548: [u8; 0x68],
@@ -34,4 +37,16 @@ pub struct CSChrBehaviorModule {
     unk17b8: [u8; 0x10],
     pub animation_speed: f32,
     unk17cc: [u8; 0x1f4],
+}
+
+#[repr(C)]
+pub struct hkbCharacterContext {
+    unk00: [u8; 0x30],
+    pub hkb_character: OwnedPtr<hkbCharacter>,
+}
+
+#[repr(C)]
+pub struct hkbCharacter {
+    unk00: [u8; 0x98],
+    pub behavior_graph: *mut (),
 }

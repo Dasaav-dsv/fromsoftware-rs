@@ -19,7 +19,7 @@ pub struct CSChrLadderModule {
     pub bottom: F32Vector4,
     unk40: u8,
     unk44: u32,
-    flags: u8,
+    pub flags: u8,
 }
 
 /// Left and right are viewed from the ladder's perspective (character's front) rather than
