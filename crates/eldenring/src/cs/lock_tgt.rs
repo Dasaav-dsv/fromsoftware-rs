@@ -9,7 +9,7 @@ use crate::cs::FieldInsHandle;
 pub struct LockTgtMan {
     vftable: usize,
     unk08: [u8; 0x8],
-    pub nodes: usize,
+    pub nodes: Option<NonNull<LockTgtNode>>,
     unk18: [u8; 0x2818],
     pub is_locked_on: bool,
     pub is_lock_on_requested: bool,
