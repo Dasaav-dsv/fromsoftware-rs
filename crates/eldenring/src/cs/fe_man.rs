@@ -56,7 +56,7 @@ pub struct CSFeManImp {
     /// Wraps around when it reaches 6
     pub proc_status_messages_write_index: u32,
     unk59c4: [u8; 12],
-    unk59d0: F32Vector4,
+    pub lock_on_pos: F32Vector4,
     unk59e0: u32,
     unk59e4: [u8; 12],
     /// Data used for the enemy character tags
@@ -395,7 +395,8 @@ pub struct ChrEnemyTagEntry {
     /// Z - depth, seems to be increased when character is further away, not used elsewhere
     /// W - unused, always 0
     pub screen_pos: F32Vector4,
-    unk20: [u8; 0x4],
+    unk20: u8,
+    pub unk21: bool,
     /// Amount of hp lost
     /// Used to render the damage number on the tag
     pub damage_taken: i32,
