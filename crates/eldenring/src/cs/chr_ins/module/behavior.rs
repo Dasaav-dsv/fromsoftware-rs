@@ -1,4 +1,4 @@
-use std::ptr::NonNull;
+use std::{ffi::c_void, ops::Deref, ptr::NonNull};
 
 use shared::{F32Vector4, OwnedPtr};
 
@@ -48,5 +48,39 @@ pub struct hkbCharacterContext {
 #[repr(C)]
 pub struct hkbCharacter {
     unk00: [u8; 0x98],
-    pub behavior_graph: *mut (),
+    pub behavior_graph: OwnedPtr<hkbBehaviorGraph>,
+}
+
+#[repr(C)]
+pub struct hkbBehaviorGraph {
+    unk00: [u8; 0xe0],
+    pub flat: OwnedPtr<hkbBehaviorGraphFlat>,
+}
+
+#[repr(C)]
+pub struct hkbBehaviorGraphFlat {
+    data: *mut NonNull<hkbBehaviorGraphNode>,
+    size: u32,
+    capacity_and_flags: u32,
+}
+
+#[repr(C)]
+pub struct hkbBehaviorGraphNode {
+    pub unk00: *mut c_void,
+    pub unk08: *mut c_void,
+    pub graph: NonNull<hkbBehaviorGraph>,
+    pub unk18: *mut c_void,
+    pub unk20: *mut c_void,
+    pub unk28: Option<NonNull<hkbBehaviorGraphNode>>,
+    pub unk30: u32,
+    pub unk34: u32,
+    pub flags: [u8; 8],
+}
+
+impl Deref for hkbBehaviorGraphFlat {
+    type Target = [NonNull<hkbBehaviorGraphNode>];
+
+    fn deref(&self) -> &Self::Target {
+        unsafe { std::slice::from_raw_parts(self.data, self.size as usize) }
+    }
 }
