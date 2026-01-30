@@ -110,6 +110,8 @@ pub struct RvaBundle {
     pub solo_param_repository_vmt: u32,
     pub spawn_geometry: u32,
     pub virtual_multi_device_vmt: u32,
+    pub tpf_res_cap_vmt: u32,
+    pub tpf_file_cap_vmt: u32,
     pub world_area_chr_base_vmt: u32,
     pub world_area_chr_vmt: u32,
     pub world_area_info_base_vmt: u32,

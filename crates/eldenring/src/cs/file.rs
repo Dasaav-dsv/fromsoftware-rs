@@ -7,6 +7,10 @@ use crate::dlkr::DLPlainLightMutex;
 use crate::fd4::{FD4BasicHashString, FD4FileCap, FD4ResCap, FD4ResCapHolder, FD4ResRep};
 use shared::{OwnedPtr, Subclass};
 
+mod tpf;
+
+pub use tpf::*;
+
 #[vtable_rs::vtable]
 pub trait CSFileImpVmt {
     fn get_runtime_metadata(&self) -> usize;
@@ -47,6 +51,7 @@ pub trait CSFileImpVmt {
 
 /// Manages files used by the file, both virtual and on-disk.
 #[repr(C)]
+#[shared::singleton("CSFile")]
 pub struct CSFileImp {
     vftable: VPtr<dyn CSFileImpVmt, Self>,
     pub file_repository_1: OwnedPtr<CSFileRepository>,

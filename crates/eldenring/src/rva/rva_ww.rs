@@ -109,6 +109,8 @@ pub const RVAS: RvaBundle = RvaBundle {
     solo_param_repository_vmt: 0x2bb84c8,
     spawn_geometry: 0x6a5ed0,
     virtual_multi_device_vmt: 0x30cda30,
+    tpf_file_cap_vmt: 0x29dd270,
+    tpf_res_cap_vmt: 0x2b77710,
     world_area_chr_base_vmt: 0x2a4f220,
     world_area_chr_vmt: 0x2a4f170,
     world_area_info_base_vmt: 0x2a79c18,
