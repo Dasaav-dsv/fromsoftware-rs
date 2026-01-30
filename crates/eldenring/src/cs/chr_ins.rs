@@ -1,3 +1,4 @@
+use std::ffi::c_void;
 use std::{borrow::Cow, fmt::Display, mem::transmute, ptr::NonNull};
 
 use bitfield::bitfield;
@@ -640,7 +641,7 @@ pub struct ChrCtrl {
     pub scale_size_z: f32,
     pub offset_y: f32,
     unk2e4: [u8; 0x14],
-    location_mtx44_chr_entity: usize,
+    pub location_mtx44_chr_entity: *mut c_void,
     unk300: u8,
     /// Set by TAE Event 0 ChrActionFlag (action 113 INVOKEHEIGHTCORRECTION)
     pub height_correction_request: bool,
