@@ -1,3 +1,5 @@
+use std::ffi::c_void;
+
 use shared::OwnedPtr;
 
 mod action_flag;
@@ -60,7 +62,7 @@ pub struct ChrInsModuleContainer {
     pub action_request: OwnedPtr<CSChrActionRequestModule>,
     pub throw: OwnedPtr<CSChrThrowModule>,
     hitstop: usize,
-    damage: usize,
+    pub damage: *mut c_void,
     pub material: OwnedPtr<CSChrMaterialModule>,
     knockback: usize,
     sfx: usize,
