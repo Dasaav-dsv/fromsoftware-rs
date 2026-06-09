@@ -5,8 +5,8 @@ const LANG_ID_JP: u16 = 0x0011;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum GameVersion {
-    Ww261,
-    Jp2611,
+    Ww262,
+    Jp2621,
 }
 
 impl GameVersion {
@@ -42,8 +42,8 @@ impl GameVersion {
 
     fn from_metadata(product: &str, lang_id: u16, version: &str) -> Option<Self> {
         match (product, lang_id, version) {
-            ("ELDEN RING™", LANG_ID_EN, "2.6.1.0") => Some(Self::Ww261),
-            ("ELDEN RING", LANG_ID_JP, "2.6.1.1") => Some(Self::Jp2611),
+            ("ELDEN RING™", LANG_ID_EN, "2.6.2.0") => Some(Self::Ww262),
+            ("ELDEN RING", LANG_ID_JP, "2.6.2.1") => Some(Self::Jp2621),
             _ => None,
         }
     }
