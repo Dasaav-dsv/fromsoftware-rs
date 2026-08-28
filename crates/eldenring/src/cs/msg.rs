@@ -9,7 +9,7 @@ use std::{
 
 use windows::core::PCWSTR;
 
-use crate::dlkr::DLAllocatorRef;
+use crate::dlkr::DLAllocator;
 
 #[repr(C)]
 #[shared::singleton("MsgRepository")]
@@ -21,7 +21,7 @@ pub struct MsgRepository {
     _unk18: u32,
     _unk20: usize,
     _unk28: usize,
-    pub allocator: DLAllocatorRef,
+    pub allocator: &'static DLAllocator,
     _unk38: u32,
     _unk3c: u32,
     _unk40: u32,
