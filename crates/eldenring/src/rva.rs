@@ -53,19 +53,3 @@ pub fn get() -> &'static RvaBundle {
 
     &RVAS
 }
-
-/// Determines the region and version of the current executable and, if it's
-/// known, returns the [RvaBundle] for it.
-fn detect_version_and_get_rvas(module: &PeView) -> Option<RvaBundle> {
-    let version = GameVersion::detect(module)?;
-    Some(RvaBundle::for_version(version))
-}
-
-impl RvaBundle {
-    fn for_version(version: GameVersion) -> Self {
-        match version {
-            GameVersion::Ww270 => rva_ww::RVAS,
-            GameVersion::Jp2701 => rva_jp::RVAS,
-        }
-    }
-}

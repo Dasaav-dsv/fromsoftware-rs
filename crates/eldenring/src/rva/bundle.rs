@@ -5,7 +5,6 @@
 /// A struct containing offsets (relative to the beginning of the executable) of
 /// various addresses of structures and functions. They can be converted to a
 /// usable address using the [Pe::rva_to_va](pelite::pe64::Pe::rva_to_va) trait function
-/// usable address using the [Pe::rva_to_va](pelite::pe64::Pe::rva_to_va) trait function
 /// of [Program](fromsoftware_shared::Program).
 ///
 /// These are populated from `mapper-profile.toml` in the root of this package
@@ -64,7 +63,6 @@ pub struct RvaBundle {
     pub csrand_vmt: u32,
     pub csrand_xorshift_vmt: u32,
     pub csride_node_vmt: u32,
-    pub csride_node_vmt: u32,
     pub cstask_base_vmt: u32,
     pub cstask_group_ins_vmt: u32,
     pub cstask_vmt: u32,
@@ -95,7 +93,6 @@ pub struct RvaBundle {
     pub game_man: u32,
     pub global_hinstance: u32,
     pub ichr_finder_vmt: u32,
-    pub ichr_finder_vmt: u32,
     pub initialize_spawn_geometry_request: u32,
     pub keyboard_device_vmt: u32,
     pub mouse_device_vmt: u32,
@@ -112,10 +109,9 @@ pub struct RvaBundle {
     pub runtime_heap_allocator: u32,
     pub solo_param_repository_vmt: u32,
     pub spawn_geometry: u32,
-    pub virtual_multi_device_vmt: u32,
-    pub tpf_res_cap_vmt: u32,
     pub tpf_file_cap_vmt: u32,
     pub tpf_res_cap_vmt: u32,
+    pub virtual_multi_device_vmt: u32,
     pub world_area_chr_base_vmt: u32,
     pub world_area_chr_vmt: u32,
     pub world_area_info_base_vmt: u32,
