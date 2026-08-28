@@ -120,3 +120,16 @@ pub enum ChrCamType {
     Unk6 = 6,
     DeathCam = 7,
 }
+
+#[repr(C)]
+pub struct ChrExFollowCam {
+    pub pers_cam: CSPersCam,
+    pub chr_cam: OwnedPtr<ChrCam>,
+    unk68: [u8; 0x1d8],
+    pub camera_auto_rotation: bool,
+    unk241: [u8; 0xa3],
+    pub locked_on_cam_offset: f32,
+    unk2e8: [u8; 0x48],
+    pub reset_camera_y: bool,
+    pub reset_camera_x: bool,
+}
