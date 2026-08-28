@@ -19,8 +19,8 @@ use crate::position::{BlockPosition, HavokPosition};
 use crate::rva;
 use shared::program::Program;
 use shared::{
-    Aabb, F32Matrix4x4, F32ModelMatrix, F32Vector3, F32Vector4, FromStatic, InstanceError,
-    InstanceResult, OwnedPtr, Subclass, Superclass, for_all_subclasses,
+    Aabb, F32Matrix4x4, F32ModelMatrix, F32Vector3, F32Vector4, F32ViewMatrix, FromStatic,
+    InstanceError, InstanceResult, OwnedPtr, Subclass, Superclass, for_all_subclasses,
 };
 
 mod module;
@@ -179,7 +179,8 @@ pub struct ChrIns {
     /// Multiplier applied to stamina recovery rate.
     /// Used together with regen rate percent to compute stamina recovered per tick.
     pub stamina_recovery_modifier: f32,
-    unkec: [u8; 0x74],
+    unkec: [u8; 0x34],
+    pub aim_view_mtx: F32ViewMatrix,
     /// Used by TAE's UseGoods to figure out what item to actually apply.
     pub tae_queued_use_item: OptionalItemId,
     unk164: u32,
@@ -600,7 +601,9 @@ pub struct ChrCtrl {
     joint_modifier: usize,
     unk188: [u8; 0x4],
     pub weight_type: u32,
-    unk190: [u8; 0x10],
+    unk190: [u8; 0x9],
+    pub is_unlocked: bool,
+    unk19a: [u8; 0x6],
     /// Offset from the character's dmypoly for the tag position (name, hp, etc).
     /// Will modify position of the resulting tag.
     pub lock_on_chr_tag_dmypoly_offset: F32Vector4,
@@ -816,7 +819,7 @@ pub struct CSModelIns {
     vftable: usize,
     unk8: usize,
     pub model_item: OwnedPtr<CSFD4ModelItem>,
-    pub model_disp_entity: usize,
+    pub model_disp_entity: OwnedPtr<CSModelDispEntity>,
     pub location_entity: usize,
 }
 
@@ -844,6 +847,16 @@ pub struct CSFD4ModelItem {
     pub owning_model: NonNull<CSModelIns>,
     unk668: [u8; 0x58],
     unk6c0: DLString,
+}
+
+#[repr(C)]
+pub struct CSModelDispEntity {
+    vftable: usize,
+    ref_count: u32,
+    traverser_acceptor: usize,
+    layer_dynamic_tree: usize,
+    pub disp_flags1: u32,
+    pub disp_flags2: u32,
 }
 
 #[repr(C)]
@@ -891,7 +904,7 @@ pub struct PlayerIns {
     unk620: [u8; 0x18],
     pub chr_asm: OwnedPtr<ChrAsm>,
     chr_asm_model_res: usize,
-    chr_asm_model_ins: usize,
+    pub chr_asm_model_ins: Option<OwnedPtr<CSChrAsmModelIns>>,
     unk650: [u8; 0x28],
     /// Set on player spawn and maybe on arena respawn?
     /// Players cannot be hurt if this is above 0.
@@ -1061,4 +1074,14 @@ pub enum ChrType {
     BloodyFingerNpc = 20,
     RecusantNpc = 21,
     Unk22 = 22,
+}
+
+#[repr(C)]
+pub struct CSChrAsmModelIns {
+    vftable: usize,
+    pub chr_model_ins: OwnedPtr<CSChrModelIns>,
+    unk08: usize,
+    facegen_model: usize,
+    flags: u32,
+    pub parts_model_ins: [Option<OwnedPtr<CSModelIns>>; 27],
 }
