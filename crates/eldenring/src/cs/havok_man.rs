@@ -4,7 +4,9 @@ use pelite::pe64::Pe;
 
 use super::PlayerIns;
 use crate::{
-    cs::FieldInsBase, position::{HavokPosition, PositionDelta}, rva
+    cs::FieldInsBase,
+    position::{HavokPosition, PositionDelta},
+    rva,
 };
 use shared::{OwnedPtr, program::Program};
 
