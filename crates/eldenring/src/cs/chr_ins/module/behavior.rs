@@ -1,4 +1,8 @@
-use std::{ffi::c_void, ops::Deref, ptr::NonNull};
+use std::{
+    ffi::{c_char, c_void},
+    ops::Deref,
+    ptr::NonNull,
+};
 
 use shared::{F32Vector4, OwnedPtr};
 
@@ -14,7 +18,7 @@ pub struct CSChrBehaviorModule {
     unk28: usize,
     pub root_motion: F32Vector4,
     unk40: [u8; 0x20],
-    pub hkb_context: OwnedPtr<hkbCharacterContext>,
+    pub hkb_context: Option<OwnedPtr<hkbCharacterContext>>,
     unk60: [u8; 0x230],
     pub sprint_state: u16,
     unk29a: [u8; 0x80e],
@@ -42,13 +46,13 @@ pub struct CSChrBehaviorModule {
 #[repr(C)]
 pub struct hkbCharacterContext {
     unk00: [u8; 0x30],
-    pub hkb_character: OwnedPtr<hkbCharacter>,
+    pub hkb_character: Option<OwnedPtr<hkbCharacter>>,
 }
 
 #[repr(C)]
 pub struct hkbCharacter {
     unk00: [u8; 0x98],
-    pub behavior_graph: OwnedPtr<hkbBehaviorGraph>,
+    pub behavior_graph: Option<OwnedPtr<hkbBehaviorGraph>>,
 }
 
 #[repr(C)]
@@ -59,7 +63,7 @@ pub struct hkbBehaviorGraph {
 
 #[repr(C)]
 pub struct hkbBehaviorGraphFlat {
-    data: *mut NonNull<hkbBehaviorGraphNode>,
+    data: *mut *mut hkbBehaviorGraphNode,
     size: u32,
     capacity_and_flags: u32,
 }
@@ -67,7 +71,7 @@ pub struct hkbBehaviorGraphFlat {
 #[repr(C)]
 pub struct hkbBehaviorGraphNode {
     pub unk00: *mut c_void,
-    pub unk08: *mut c_void,
+    pub unk08: *mut hkbBehaviorGraphNodeUnk08,
     pub graph: NonNull<hkbBehaviorGraph>,
     pub unk18: *mut c_void,
     pub unk20: *mut c_void,
@@ -75,8 +79,14 @@ pub struct hkbBehaviorGraphNode {
     pub flags: [u8; 8],
 }
 
+#[repr(C)]
+pub struct hkbBehaviorGraphNodeUnk08 {
+    pub unk00: [u8; 0x48],
+    pub name: *const c_char,
+}
+
 impl Deref for hkbBehaviorGraphFlat {
-    type Target = [NonNull<hkbBehaviorGraphNode>];
+    type Target = [*mut hkbBehaviorGraphNode];
 
     fn deref(&self) -> &Self::Target {
         match self.size {
